@@ -45,6 +45,12 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        Button wifiButton = findViewById(R.id.wifi);
+        wifiButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, Wifi.class);
+            startActivity(intent);
+        });
+
 
     }
 }
