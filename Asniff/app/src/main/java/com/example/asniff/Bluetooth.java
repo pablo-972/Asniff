@@ -77,9 +77,9 @@ public class Bluetooth extends AppCompatActivity {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 String deviceName = device.getName();
                 String macAddress = device.getAddress();
-                
+
                 if(deviceName != null){
-                    String info = "Nombre: " + deviceName + "\n Dirección MAC: " + macAddress;
+                    String info = "Nombre: " + deviceName + "\nDirección MAC: " + macAddress;
                     listaAdaptadaDispositivos.add(info);
                     listaAdaptadaDispositivos.notifyDataSetChanged();
                 }
