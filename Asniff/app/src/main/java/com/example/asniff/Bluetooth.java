@@ -33,7 +33,6 @@ public class Bluetooth extends AppCompatActivity {
 
 
 
-    @RequiresApi(api = Build.VERSION_CODES.S)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,9 +77,7 @@ public class Bluetooth extends AppCompatActivity {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 String deviceName = device.getName();
                 String macAddress = device.getAddress();
-
-                Log.d("TAG", "Nombre: " + deviceName);
-
+                
                 if(deviceName != null){
                     String info = "Nombre: " + deviceName + "\n Dirección MAC: " + macAddress;
                     listaAdaptadaDispositivos.add(info);
