@@ -31,7 +31,7 @@ public class Bluetooth extends AppCompatActivity {
     private BluetoothAdapter bluetoothAdapter;
     private Toast toast;
 
-    private static final int PERMISSION_REQUEST_CODE = 100;
+
 
     @RequiresApi(api = Build.VERSION_CODES.S)
     @Override
@@ -44,22 +44,7 @@ public class Bluetooth extends AppCompatActivity {
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.BLUETOOTH_CONNECT) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.BLUETOOTH_CONNECT}, 1);
-        }
 
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this, new String[]{
-                    android.Manifest.permission.BLUETOOTH_SCAN,
-            }, PERMISSION_REQUEST_CODE);
-        }
-
-        if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
-                    1);
-        }
-        Log.d("TAG", "Nombre: ");
 
         //Inicializamos
         listaDispositivos = findViewById(R.id.dispositivosBluetooth);
