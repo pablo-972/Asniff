@@ -14,8 +14,7 @@ import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
 public class MainActivity extends AppCompatActivity {
-
-    private static final int PERMISSION_REQUEST_CODE = 100;
+    
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,15 +32,11 @@ public class MainActivity extends AppCompatActivity {
         }
 
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.BLUETOOTH_SCAN) != PackageManager.PERMISSION_GRANTED){
-            ActivityCompat.requestPermissions(this, new String[]{
-                    android.Manifest.permission.BLUETOOTH_SCAN,
-            }, PERMISSION_REQUEST_CODE);
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.BLUETOOTH_SCAN}, 1);
         }
 
         if (ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this,
-                    new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
-                    1);
+            ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, 1);
         }
 
         Button botonBluetooth = findViewById(R.id.bluetooth);
