@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "185348880041",
+    "project_id": "asniff-603d3",
+    "storage_bucket": "asniff-603d3.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:185348880041:android:b41f294de27637eef11bb8",
+        "android_client_info": {
+          "package_name": "com.example.asniff"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBzYYM3bm-RBuMyX0JzcVe8AayAH3mc0ec"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

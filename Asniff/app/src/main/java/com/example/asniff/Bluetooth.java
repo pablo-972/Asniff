@@ -6,60 +6,39 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.content.pm.PackageManager;
-import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import androidx.activity.EdgeToEdge;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.app.ActivityCompat;
-import androidx.core.content.ContextCompat;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class Bluetooth extends AppCompatActivity {
 
     private ListView listaDispositivos;
     private ArrayAdapter<String> listaAdaptadaDispositivos;
     private BluetoothAdapter bluetoothAdapter;
-    private Toast toast;
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        EdgeToEdge.enable(this);
         setContentView(R.layout.activity_bluetooth);
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
-        });
 
-
-        //Inicializamos
         listaDispositivos = findViewById(R.id.dispositivosBluetooth);
         listaAdaptadaDispositivos = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         listaDispositivos.setAdapter(listaAdaptadaDispositivos);
 
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
-        if(bluetoothAdapter == null){
-            toast = Toast.makeText(getApplicationContext(), "ERROR AL DETECTAR EL ADAPTADOR BLUETOOTH", Toast.LENGTH_LONG);
-            toast.show();
-        }
-
-        if(!bluetoothAdapter.isEnabled()){
-            toast = Toast.makeText(getApplicationContext(), "ACTIVE EL SERVICIO BLUETOOTH", Toast.LENGTH_LONG);
-            toast.show();
+        if (bluetoothAdapter == null || !bluetoothAdapter.isEnabled()) {
+            Toast.makeText(getApplicationContext(), "ERROR AL DETECTAR O ACTIVAR EL ADAPTADOR BLUETOOTH", Toast.LENGTH_LONG).show();
+            return;
         }
 
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
@@ -72,18 +51,37 @@ public class Bluetooth extends AppCompatActivity {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
-            if(BluetoothDevice.ACTION_FOUND.equals(action)){
+            if (BluetoothDevice.ACTION_FOUND.equals(action)) {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 String deviceName = device.getName();
                 String macAddress = device.getAddress();
 
-                if(deviceName != null){
+                if (deviceName != null) {
                     String info = "Nombre: " + deviceName + "\nDirección MAC: " + macAddress;
                     listaAdaptadaDispositivos.add(info);
                     listaAdaptadaDispositivos.notifyDataSetChanged();
+
+                    // Aquí subimos los datos a Firebase
+                    DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://asniff-603d3-default-rtdb.europe-west1.firebasedatabase.app")
+                            .getReference("dispositivos");
+
+                    // Crear un mapa con los datos del dispositivo
+                    Map<String, String> deviceData = new HashMap<>();
+                    deviceData.put("name", deviceName);
+                    deviceData.put("mac", macAddress);
+
+                    // Subir los datos de forma sencilla
+                    databaseReference.push().setValue(deviceData)
+                            .addOnSuccessListener(aVoid -> Toast.makeText(getApplicationContext(), "Dispositivo enviado a Firebase", Toast.LENGTH_SHORT).show())
+                            .addOnFailureListener(e -> Toast.makeText(getApplicationContext(), "Error al enviar a Firebase", Toast.LENGTH_SHORT).show());
                 }
             }
         }
     };
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(receiver); // No olvides cancelar el registro del receptor
+    }
 }
