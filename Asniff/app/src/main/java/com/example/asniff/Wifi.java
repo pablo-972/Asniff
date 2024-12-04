@@ -1,10 +1,13 @@
 package com.example.asniff;
 
 import android.content.Context;
+import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.text.format.Formatter;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -14,9 +17,15 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 
 public class Wifi extends AppCompatActivity {
@@ -42,22 +51,33 @@ public class Wifi extends AppCompatActivity {
         listaDispositivos.setAdapter(listaAdaptadaDispositivos);
 
         WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
+
+        if (!wifiManager.isWifiEnabled()) {
+            Toast.makeText(getApplicationContext(), "ACTIVE EL SERVICIO WIFI", Toast.LENGTH_LONG).show();
+        }
+
         WifiInfo wifiInfo = wifiManager.getConnectionInfo();
         String myAddress = Formatter.formatIpAddress(wifiInfo.getIpAddress());
-
         listaAdaptadaDispositivos.add(myAddress);
 
-        if (myAddress != null) {
-            String subnet = myAddress.substring(0, myAddress.lastIndexOf("."));
-            scanNetwork(subnet);
-
-        } else {
-            Toast.makeText(this, "No se pudo obtener la dirección IP local", Toast.LENGTH_SHORT).show();
+        wifiManager.startScan();
+        List<ScanResult> results = wifiManager.getScanResults();
+        for(ScanResult result : results){
+            //listaAdaptadaDispositivos.add(result.toString());
+            String info = "BBSID: " + result.BSSID + "\nSSID: " + result.SSID;
+            listaAdaptadaDispositivos.add(info);
+            listaAdaptadaDispositivos.notifyDataSetChanged();
         }
-    }
 
-    private void scanNetwork(String subnet) {
-        //tiene que ir una hebra (creo)
+        listaDispositivos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                
+            }
+
+        });
+
+
     }
 
 }
