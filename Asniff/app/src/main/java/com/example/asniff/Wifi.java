@@ -6,6 +6,7 @@ import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.text.format.Formatter;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -23,6 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import java.io.IOException;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,6 +35,8 @@ public class Wifi extends AppCompatActivity {
     private ListView listaDispositivos;
 
     private ArrayAdapter<String> listaAdaptadaDispositivos;
+
+    private Map<String, List<String>> dispositivosEncontrados = new HashMap<>();
 
 
     @Override
@@ -64,15 +68,36 @@ public class Wifi extends AppCompatActivity {
         List<ScanResult> results = wifiManager.getScanResults();
         for(ScanResult result : results){
             //listaAdaptadaDispositivos.add(result.toString());
-            String info = "BBSID: " + result.BSSID + "\nSSID: " + result.SSID;
-            listaAdaptadaDispositivos.add(info);
-            listaAdaptadaDispositivos.notifyDataSetChanged();
+            String info = "BBSID: " + result.BSSID + "\nSSID: " + result.SSID; //+ "\nEstandar: " + result.getWifiStandard() añadir esto pero hay que cambiar la version de android
+            List<String> data = new ArrayList<>();
+            data.add(result.SSID);
+
+
+            if(!dispositivosEncontrados.containsKey(result.BSSID)){
+                dispositivosEncontrados.put(result.BSSID, data);
+                listaAdaptadaDispositivos.add(info);
+                listaAdaptadaDispositivos.notifyDataSetChanged();
+            }
         }
 
         listaDispositivos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                
+                String ap = listaAdaptadaDispositivos.getItem(position);
+                int inicio = ap.indexOf("BSSID: ") + "BSSID: ".length();
+                int fin = ap.indexOf("\n", inicio);
+                String bssid = ap.substring(inicio,fin).trim();
+                List<String> data = dispositivosEncontrados.get(bssid);
+
+
+                DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://asniff-603d3-default-rtdb.europe-west1.firebasedatabase.app").getReference("wifi");
+
+                Map<String, List<String>> deviceData = new HashMap<>();
+                deviceData.put(bssid,data);
+
+                databaseReference.push().setValue(deviceData)
+                        .addOnSuccessListener(aVoid -> Toast.makeText(getApplicationContext(), "Dispositivo enviado a Firebase", Toast.LENGTH_SHORT).show())
+                        .addOnFailureListener(e -> Toast.makeText(getApplicationContext(), "Error al enviar a Firebase", Toast.LENGTH_SHORT).show());
             }
 
         });

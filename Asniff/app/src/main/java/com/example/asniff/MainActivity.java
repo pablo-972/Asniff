@@ -1,14 +1,11 @@
 package com.example.asniff;
 
-import android.Manifest;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.widget.Button;
-import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
@@ -16,13 +13,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.Firebase;
 import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -62,6 +53,12 @@ public class MainActivity extends AppCompatActivity {
         Button wifiButton = findViewById(R.id.wifi);
         wifiButton.setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, Wifi.class);
+            startActivity(intent);
+        });
+
+        Button registroButton = findViewById(R.id.registrosWifi);
+        registroButton.setOnClickListener(v -> {
+            Intent intent = new Intent(MainActivity.this, Registros.class);
             startActivity(intent);
         });
 
