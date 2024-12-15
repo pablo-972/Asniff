@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -31,6 +32,7 @@ import java.util.Map;
 
 
 public class Wifi extends AppCompatActivity {
+    private TextView direccionIP;
 
     private ListView listaDispositivos;
 
@@ -50,6 +52,7 @@ public class Wifi extends AppCompatActivity {
         });
 
         //Inicializamos
+        direccionIP = findViewById(R.id.direccionIP);
         listaDispositivos = findViewById(R.id.dispositivosWifi);
         listaAdaptadaDispositivos = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         listaDispositivos.setAdapter(listaAdaptadaDispositivos);
@@ -62,7 +65,7 @@ public class Wifi extends AppCompatActivity {
 
         WifiInfo wifiInfo = wifiManager.getConnectionInfo();
         String myAddress = Formatter.formatIpAddress(wifiInfo.getIpAddress());
-        listaAdaptadaDispositivos.add(myAddress);
+        direccionIP.setText("Conectado a: " + wifiInfo.getSSID() + "\nDirección IP: " + myAddress);
 
         wifiManager.startScan();
         List<ScanResult> results = wifiManager.getScanResults();

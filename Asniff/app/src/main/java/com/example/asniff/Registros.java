@@ -1,8 +1,11 @@
 package com.example.asniff;
 
 import android.os.Bundle;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -40,19 +43,36 @@ public class Registros extends AppCompatActivity {
         listaAdaptadaDispositivosBluetooth = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         listaDispositivosBluetooth.setAdapter(listaAdaptadaDispositivosBluetooth);
 
-        DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://asniff-603d3-default-rtdb.europe-west1.firebasedatabase.app").getReference("bluetooth");
+        DatabaseReference databaseReferenceBluetooth = FirebaseDatabase.getInstance("https://asniff-603d3-default-rtdb.europe-west1.firebasedatabase.app").getReference("bluetooth");
 
-        databaseReference.get().addOnCompleteListener(task -> {
+        databaseReferenceBluetooth.get().addOnCompleteListener(task -> {
             DataSnapshot dataSnapshot = task.getResult();
 
             for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                 Map<String, String> dispositivo = (Map<String, String>) snapshot.getValue();
-                listaAdaptadaDispositivosBluetooth.add(dispositivo.toString());
+                listaAdaptadaDispositivosBluetooth.add("ID: " + snapshot.getKey() + "\n INFO: " + dispositivo.toString());
             }
         });
 
+        //BorrarBluetooth
+        listaDispositivosBluetooth.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String selectedDevice = listaAdaptadaDispositivosBluetooth.getItem(position);
+                int inicio = selectedDevice.indexOf("ID: ") + "ID: ".length();
+                int fin = selectedDevice.indexOf("\n", inicio);
+                String idDispositivo = selectedDevice.substring(inicio, fin).trim();
 
-        //Inicializamos
+                databaseReferenceBluetooth.child(idDispositivo).removeValue()
+                        .addOnSuccessListener(aVoid -> {
+                            listaAdaptadaDispositivosBluetooth.remove(selectedDevice);
+                            Toast.makeText(Registros.this, "Dispositivo eliminado", Toast.LENGTH_SHORT).show();
+                        })
+                        .addOnFailureListener(e -> Toast.makeText(Registros.this, "Error al eliminar el dispositivo", Toast.LENGTH_SHORT).show());
+            }
+        });
+
+            //Inicializamos
         listaDispositivosWifi = findViewById(R.id.registrosWifi);
         listaAdaptadaDispositivosWifi = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         listaDispositivosWifi.setAdapter(listaAdaptadaDispositivosWifi);
@@ -64,12 +84,28 @@ public class Registros extends AppCompatActivity {
 
             for(DataSnapshot snapshot : dataSnapshot.getChildren()){
                 Map<String, String> dispositivoWifi = (Map<String, String>) snapshot.getValue();
-                listaAdaptadaDispositivosWifi.add(dispositivoWifi.toString());
+                listaAdaptadaDispositivosWifi.add("ID: " + snapshot.getKey() + "\n INFO: " + dispositivoWifi.toString());
             }
         });
 
 
+        //BorrarWifi
+        listaDispositivosWifi.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String selectedDevice = listaAdaptadaDispositivosWifi.getItem(position);
+                int inicio = selectedDevice.indexOf("ID: ") + "ID: ".length();
+                int fin = selectedDevice.indexOf("\n", inicio);
+                String idDispositivo = selectedDevice.substring(inicio, fin).trim();
 
+                databaseReferenceWifi.child(idDispositivo).removeValue()
+                        .addOnSuccessListener(aVoid -> {
+                            listaAdaptadaDispositivosWifi.remove(selectedDevice);
+                            Toast.makeText(Registros.this, "Dispositivo eliminado", Toast.LENGTH_SHORT).show();
+                        })
+                        .addOnFailureListener(e -> Toast.makeText(Registros.this, "Error al eliminar el dispositivo", Toast.LENGTH_SHORT).show());
+            }
+        });
 
 
     }

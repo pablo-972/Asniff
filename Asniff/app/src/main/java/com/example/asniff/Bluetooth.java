@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,6 +27,7 @@ import java.util.Map;
 
 public class Bluetooth extends AppCompatActivity {
 
+    private TextView dispositivoBluetooth;
     private ListView listaDispositivos;
     private ArrayAdapter<String> listaAdaptadaDispositivos;
     private BluetoothAdapter bluetoothAdapter;
@@ -39,6 +41,7 @@ public class Bluetooth extends AppCompatActivity {
         setContentView(R.layout.activity_bluetooth);
 
         //Inicializamos
+        dispositivoBluetooth = findViewById(R.id.dispositivoBluetooth);
         listaDispositivos = findViewById(R.id.dispositivosBluetooth);
         listaAdaptadaDispositivos = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         listaDispositivos.setAdapter(listaAdaptadaDispositivos);
@@ -53,6 +56,8 @@ public class Bluetooth extends AppCompatActivity {
         if(!bluetoothAdapter.isEnabled()){
             Toast.makeText(getApplicationContext(), "ACTIVE EL SERVICIO BLUETOOTH", Toast.LENGTH_LONG).show();
         }
+
+        dispositivoBluetooth.setText("Nombre del dispositivo actual: " + bluetoothAdapter.getName());
 
         //Comenzamos a escanear
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);

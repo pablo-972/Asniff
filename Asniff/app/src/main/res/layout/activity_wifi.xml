@@ -7,6 +7,8 @@
     android:layout_height="match_parent"
     tools:context=".Wifi">
 
+
+
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="425dp"
@@ -29,14 +31,65 @@
             android:textSize="30sp"
             android:textStyle="italic" />
 
+
+
     </LinearLayout>
 
     <ListView
         android:id="@+id/dispositivosWifi"
-        android:layout_width="335dp"
-        android:layout_height="517dp"
+        android:layout_width="349dp"
+        android:layout_height="446dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.807" />
+
+    <TextView
+        android:id="@+id/direccionIP"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="96dp"
+        android:text="TextView"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.079"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <View
+        android:id="@+id/view"
+        android:layout_width="0dp"
+        android:layout_height="1dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="24dp"
+        android:background="#E0E0E0"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/direccionIP" />
+
+    <TextView
+        android:id="@+id/listaWifi"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="156dp"
+        android:text="Cargando redes WiFi cercanas..."
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.116"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/descripcionWifi"
+        android:layout_width="355dp"
+        android:layout_height="34dp"
+        android:layout_marginTop="184dp"
+        android:text="Las redes disponibles en tu zona aparecerán en la lista. Selecciona una para guardarla en la base de datos."
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.446"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
