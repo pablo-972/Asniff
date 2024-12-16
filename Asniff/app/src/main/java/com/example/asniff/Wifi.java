@@ -65,7 +65,9 @@ public class Wifi extends AppCompatActivity {
 
         WifiInfo wifiInfo = wifiManager.getConnectionInfo();
         String myAddress = Formatter.formatIpAddress(wifiInfo.getIpAddress());
-        direccionIP.setText("Conectado a: " + wifiInfo.getSSID() + "\nDirección IP: " + myAddress);
+        direccionIP.setText(getString(R.string.conectado_a) + wifiInfo.getSSID() + getString(R.string.direccion_ip) + myAddress);
+
+        //direccionIP.setText("Conectado a: " + wifiInfo.getSSID() + "\nDirección IP: " + myAddress);
 
         wifiManager.startScan();
         List<ScanResult> results = wifiManager.getScanResults();

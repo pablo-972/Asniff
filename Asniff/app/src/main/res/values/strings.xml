@@ -1,3 +1,21 @@
 <resources>
+
     <string name="app_name">Asniff</string>
+    <string name="inicio">Android app to scan and analyze Bluetooth devices and nearby WiFi networks</string>
+    <string name="ver_registros">View Logs</string>
+    <string name="buscando_bluetooth">Searching for nearby Bluetooth devices...</string>
+    <string name="dispositivos_disponibles">Available devices will appear in the list. Select one to save it to the database.</string>
+    <string name="dispositivo_actual">Name of the current device: </string>
+    <string name="registros_titulo">Logs</string>
+    <string name="redes_wifi_guardadas">Saved WiFi networks:</string>
+    <string name="dispositivos_bluetooth_guardados">Saved Bluetooth devices:</string>
+    <string name="si_desea_eliminar_dispositivo">If you want to delete a log, tap the desired network/device.</string>
+    <string name="cargando_redes_cercanas">Loading nearby WiFi networks...</string>
+    <string name="las_redes_disponibles_desapareceran">The networks available in your area will appear in the list. Select one to save it to the database.</string>
+    <string name="conectado_a">Connected to: </string>
+    <string name="direccion_ip">\nIP address: </string>
+    <string name="error_adaptador_bluetooth">ERROR WHEN DETECTING THE BLUETOOTH ADAPTER</string>
+    <string name="active_servicio_bluetooth">ACTIVATE THE BLUETOOTH SERVICE</string>
+
+
 </resources>

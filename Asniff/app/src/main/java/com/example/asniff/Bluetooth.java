@@ -49,15 +49,21 @@ public class Bluetooth extends AppCompatActivity {
 
 
         //Comprobamos que el adaptador funciona correctamente y este activado
+//        Toast.makeText(getApplicationContext(), "ERROR AL DETECTAR EL ADAPTADOR BLUETOOTH", Toast.LENGTH_LONG).show();
+
         if (bluetoothAdapter == null) {
-            Toast.makeText(getApplicationContext(), "ERROR AL DETECTAR EL ADAPTADOR BLUETOOTH", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.error_adaptador_bluetooth), Toast.LENGTH_LONG).show();
             return;
         }
+//        Toast.makeText(getApplicationContext(), "ACTIVE EL SERVICIO BLUETOOTH", Toast.LENGTH_LONG).show();
+
         if(!bluetoothAdapter.isEnabled()){
-            Toast.makeText(getApplicationContext(), "ACTIVE EL SERVICIO BLUETOOTH", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.active_servicio_bluetooth), Toast.LENGTH_LONG).show();
         }
 
-        dispositivoBluetooth.setText("Nombre del dispositivo actual: " + bluetoothAdapter.getName());
+        dispositivoBluetooth.setText(getString(R.string.dispositivo_actual) + bluetoothAdapter.getName());
+
+//        dispositivoBluetooth.setText("Nombre del dispositivo actual: " + bluetoothAdapter.getName());
 
         //Comenzamos a escanear
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);

@@ -2,8 +2,10 @@ package com.example.asniff;
 
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.widget.Button;
+import android.widget.TextView;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -15,15 +17,38 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.google.firebase.database.DatabaseReference;
 
+import java.util.Locale;
+
 public class MainActivity extends AppCompatActivity {
 
     DatabaseReference databaseReference;
 
+    private void setLocale(String languageCode) {
+        Locale locale = new Locale(languageCode);
+        Locale.setDefault(locale);
+
+        Configuration config = new Configuration();
+        config.setLocale(locale);
+
+        // Actualizar la configuración de recursos
+        getResources().updateConfiguration(config, getResources().getDisplayMetrics());
+    }
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+
+        String systemLanguage = Locale.getDefault().getLanguage();
+        if ("es".equals(systemLanguage)) {
+            // Cambiar el idioma de la aplicación a español
+            setLocale("es");
+        }
+
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_main);
+
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Asniff</string>
+    <string name="inicio">Aplicación Android para escanear y analizar dispositivos Bluetooth y redes WiFi cercanas</string>
+    <string name="ver_registros">Ver registros</string>
+    <string name="buscando_bluetooth">Buscando dispositivos Bluetooth cercanos...</string>
+    <string name="dispositivos_disponibles">Los dispositivos disponibles aparecerán en la lista. Selecciona uno para guardarlo en la base de datos.</string>
+    <string name="dispositivo_actual">Nombre del dispositivo actual: </string>
+    <string name="registros_titulo">Registros</string>
+    <string name="redes_wifi_guardadas">Redes WiFi guardadas:</string>
+    <string name="dispositivos_bluetooth_guardados">Dispositivos Bluetooth guardados:</string>
+    <string name="si_desea_eliminar_dispositivo">Si desea eliminar un registro, pulse en la red/dispositivo deseado.</string>
+    <string name="cargando_redes_cercanas">Cargando redes WiFi cercanas...</string>
+    <string name="las_redes_disponibles_desapareceran">Las redes disponibles en tu zona aparecerán en la lista. Selecciona una para guardarla en la base de datos.</string>
+    <string name="conectado_a">Conectado a: </string>
+    <string name="direccion_ip">\nDirección IP: </string>
+    <string name="error_adaptador_bluetooth">ERROR AL DETECTAR EL ADAPTADOR BLUETOOTH</string>
+    <string name="active_servicio_bluetooth">ACTIVE EL SERVICIO BLUETOOTH</string>
+</resources>
