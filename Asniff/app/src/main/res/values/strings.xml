@@ -18,6 +18,10 @@
     <string name="active_servicio_bluetooth">ACTIVATE THE BLUETOOTH SERVICE</string>
     <string name="dispositivo_enviado_firebase">Device Sent to Firebase</string>
     <string name="error_envio_firebase">Couldnt send to Firebase</string>
+    <string name="activa_servicio_wifi">ACTIVATE WIFI</string>
+    <string name="activa_localizacion">ACTIVATE LOCATION</string>
+    <string name="lista_bluetooth_nombre">Name: </string>
+    <string name="lista_bluetooth_direcion_mac">MAC Address: </string>
 
 
 </resources>

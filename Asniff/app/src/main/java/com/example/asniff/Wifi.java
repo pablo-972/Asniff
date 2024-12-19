@@ -60,7 +60,7 @@ public class Wifi extends AppCompatActivity {
         WifiManager wifiManager = (WifiManager) getSystemService(Context.WIFI_SERVICE);
 
         if (!wifiManager.isWifiEnabled()) {
-            Toast.makeText(getApplicationContext(), "ACTIVE EL SERVICIO WIFI", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.activa_servicio_wifi), Toast.LENGTH_LONG).show();
         }
 
         WifiInfo wifiInfo = wifiManager.getConnectionInfo();

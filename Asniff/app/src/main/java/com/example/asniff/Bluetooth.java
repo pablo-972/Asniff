@@ -71,7 +71,7 @@ public class Bluetooth extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String dispositivo = listaAdaptadaDispositivos.getItem(position);
-                int indice = dispositivo.indexOf("Dirección MAC: ") + "Dirección MAC: ".length();
+                int indice = dispositivo.indexOf(getString(R.string.lista_bluetooth_direcion_mac)) + getString(R.string.lista_bluetooth_direcion_mac).length();
                 String macDispositivo = dispositivo.substring(indice);
                 String nombreDispositivo = dispositivosEncontrados.get(macDispositivo);
 
@@ -97,7 +97,8 @@ public class Bluetooth extends AppCompatActivity {
                 String macAddress = device.getAddress();
 
                 if (deviceName != null) {
-                    String info = "Nombre: " + deviceName + "\nDirección MAC: " + macAddress;
+
+                    String info = getString(R.string.lista_bluetooth_nombre) + deviceName + "\n"+ getString(R.string.lista_bluetooth_direcion_mac) + macAddress;
                     if(!dispositivosEncontrados.containsKey(macAddress)){
                         dispositivosEncontrados.put(macAddress, deviceName);
                         listaAdaptadaDispositivos.add(info);
