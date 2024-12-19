@@ -77,11 +77,12 @@ public class Bluetooth extends AppCompatActivity {
                 String dispositivo = listaAdaptadaDispositivos.getItem(position);
                 int indice = dispositivo.indexOf("Dirección MAC: ") + "Dirección MAC: ".length();
                 String macDispositivo = dispositivo.substring(indice);
+                String nombreDispositivo = dispositivosEncontrados.get(macDispositivo);
 
                 DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://asniff-603d3-default-rtdb.europe-west1.firebasedatabase.app").getReference("bluetooth");
 
                 Map<String, String> deviceData = new HashMap<>();
-                deviceData.put(macDispositivo, macDispositivo);
+                deviceData.put(macDispositivo, nombreDispositivo);
 
                 databaseReference.push().setValue(deviceData)
                         .addOnSuccessListener(aVoid -> Toast.makeText(getApplicationContext(), "Dispositivo enviado a Firebase", Toast.LENGTH_SHORT).show())
