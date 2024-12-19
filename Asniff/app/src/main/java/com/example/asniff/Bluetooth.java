@@ -49,21 +49,17 @@ public class Bluetooth extends AppCompatActivity {
 
 
         //Comprobamos que el adaptador funciona correctamente y este activado
-//        Toast.makeText(getApplicationContext(), "ERROR AL DETECTAR EL ADAPTADOR BLUETOOTH", Toast.LENGTH_LONG).show();
 
         if (bluetoothAdapter == null) {
             Toast.makeText(getApplicationContext(), getString(R.string.error_adaptador_bluetooth), Toast.LENGTH_LONG).show();
             return;
         }
-//        Toast.makeText(getApplicationContext(), "ACTIVE EL SERVICIO BLUETOOTH", Toast.LENGTH_LONG).show();
 
         if(!bluetoothAdapter.isEnabled()){
             Toast.makeText(getApplicationContext(), getString(R.string.active_servicio_bluetooth), Toast.LENGTH_LONG).show();
         }
 
         dispositivoBluetooth.setText(getString(R.string.dispositivo_actual) + bluetoothAdapter.getName());
-
-//        dispositivoBluetooth.setText("Nombre del dispositivo actual: " + bluetoothAdapter.getName());
 
         //Comenzamos a escanear
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
@@ -84,8 +80,8 @@ public class Bluetooth extends AppCompatActivity {
                 deviceData.put(macDispositivo, macDispositivo);
 
                 databaseReference.push().setValue(deviceData)
-                        .addOnSuccessListener(aVoid -> Toast.makeText(getApplicationContext(), "Dispositivo enviado a Firebase", Toast.LENGTH_SHORT).show())
-                        .addOnFailureListener(e -> Toast.makeText(getApplicationContext(), "Error al enviar a Firebase", Toast.LENGTH_SHORT).show());
+                        .addOnSuccessListener(aVoid -> Toast.makeText(getApplicationContext(),getString(R.string.dispositivo_enviado_firebase), Toast.LENGTH_SHORT).show())
+                        .addOnFailureListener(e -> Toast.makeText(getApplicationContext(), getString(R.string.error_envio_firebase), Toast.LENGTH_SHORT).show());
             }
         });
     }

@@ -16,6 +16,8 @@
     <string name="direccion_ip">\nIP address: </string>
     <string name="error_adaptador_bluetooth">ERROR WHEN DETECTING THE BLUETOOTH ADAPTER</string>
     <string name="active_servicio_bluetooth">ACTIVATE THE BLUETOOTH SERVICE</string>
+    <string name="dispositivo_enviado_firebase">Device Sent to Firebase</string>
+    <string name="error_envio_firebase">Couldnt send to Firebase</string>
 
 
 </resources>
