@@ -1,6 +1,7 @@
 package com.example.asniff;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
@@ -10,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -84,6 +86,12 @@ public class Wifi extends AppCompatActivity {
                 listaAdaptadaDispositivos.notifyDataSetChanged();
             }
         }
+
+        Button registroWifiButton = findViewById(R.id.guardadosWifi);
+        registroWifiButton.setOnClickListener(v -> {
+            Intent intent = new Intent(Wifi.this, RegistrosWifi.class);
+            startActivity(intent);
+        });
 
         listaDispositivos.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

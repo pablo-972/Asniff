@@ -21,9 +21,9 @@
 
     <Button
         android:id="@+id/wifi"
-        android:layout_width="126dp"
-        android:layout_height="64dp"
-        android:layout_marginTop="260dp"
+        android:layout_width="144dp"
+        android:layout_height="81dp"
+        android:layout_marginTop="280dp"
         android:backgroundTint="#600000"
         android:text="WiFi"
         app:layout_constraintEnd_toEndOf="parent"
@@ -33,25 +33,13 @@
 
     <Button
         android:id="@+id/bluetooth"
-        android:layout_width="126dp"
-        android:layout_height="64dp"
-        android:layout_marginTop="392dp"
+        android:layout_width="146dp"
+        android:layout_height="84dp"
+        android:layout_marginTop="424dp"
         android:backgroundTint="#600000"
         android:text="Bluetooth"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/registrosWifi"
-        android:layout_width="126dp"
-        android:layout_height="64dp"
-        android:layout_marginTop="524dp"
-        android:backgroundTint="#600000"
-        android:text="@string/ver_registros"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintHorizontal_bias="0.494"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

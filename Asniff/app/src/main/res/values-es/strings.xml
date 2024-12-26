@@ -2,7 +2,8 @@
 <resources>
     <string name="app_name">Asniff</string>
     <string name="inicio">Aplicación Android para escanear y analizar dispositivos Bluetooth y redes WiFi cercanas</string>
-    <string name="ver_registros">Ver registros</string>
+    <string name="ver_registros_wifi">Ver registros wifi</string>
+    <string name="ver_registros_bluetooth">Ver registros bluetooth</string>
     <string name="buscando_bluetooth">Buscando dispositivos Bluetooth cercanos...</string>
     <string name="dispositivos_disponibles">Los dispositivos disponibles aparecerán en la lista. Selecciona uno para guardarlo en la base de datos.</string>
     <string name="dispositivo_actual">Nombre del dispositivo actual: </string>

@@ -33,7 +33,16 @@
         android:theme="@style/Theme.Asniff"
         tools:targetApi="31">
         <activity
-            android:name=".Registros"
+            android:name=".AnalisisWifi"
+            android:exported="false" />
+        <activity
+            android:name=".AnalisisBluetooth"
+            android:exported="false" />
+        <activity
+            android:name=".RegistrosBluetooth"
+            android:exported="false" />
+        <activity
+            android:name=".RegistrosWifi"
             android:exported="false" />
         <activity
             android:name=".Wifi"

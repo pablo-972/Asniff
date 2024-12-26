@@ -2,7 +2,8 @@
 
     <string name="app_name">Asniff</string>
     <string name="inicio">Android app to scan and analyze Bluetooth devices and nearby WiFi networks</string>
-    <string name="ver_registros">View Logs</string>
+    <string name="ver_registros_wifi">View Wifi Logs</string>
+    <string name="ver_registros_bluetooth">View Bluetooth Logs</string>
     <string name="buscando_bluetooth">Searching for nearby Bluetooth devices...</string>
     <string name="dispositivos_disponibles">Available devices will appear in the list. Select one to save it to the database.</string>
     <string name="dispositivo_actual">Name of the current device: </string>

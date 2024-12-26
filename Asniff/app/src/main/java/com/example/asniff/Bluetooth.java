@@ -6,11 +6,11 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.hardware.Sensor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -20,9 +20,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class Bluetooth extends AppCompatActivity {
@@ -59,7 +57,7 @@ public class Bluetooth extends AppCompatActivity {
             Toast.makeText(getApplicationContext(), getString(R.string.active_servicio_bluetooth), Toast.LENGTH_LONG).show();
         }
 
-        dispositivoBluetooth.setText(getString(R.string.dispositivo_actual) + bluetoothAdapter.getName());
+        dispositivoBluetooth.setText(getString(R.string.dispositivo_actual) + " " + bluetoothAdapter.getName());
 
         //Comenzamos a escanear
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
@@ -84,6 +82,12 @@ public class Bluetooth extends AppCompatActivity {
                         .addOnSuccessListener(aVoid -> Toast.makeText(getApplicationContext(),getString(R.string.dispositivo_enviado_firebase), Toast.LENGTH_SHORT).show())
                         .addOnFailureListener(e -> Toast.makeText(getApplicationContext(), getString(R.string.error_envio_firebase), Toast.LENGTH_SHORT).show());
             }
+        });
+
+        Button registroBluetoothButton = findViewById(R.id.guardadosBluetooth);
+        registroBluetoothButton.setOnClickListener(v -> {
+            Intent intent = new Intent(Bluetooth.this, RegistrosBluetooth.class);
+            startActivity(intent);
         });
     }
 
