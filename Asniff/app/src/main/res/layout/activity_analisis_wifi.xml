@@ -24,11 +24,22 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"
             android:gravity="center"
-            android:text="@string/registros_titulo"
+            android:text="@string/titulo_analisis"
             android:textColor="#FFFFFF"
             android:textSize="30sp"
             android:textStyle="italic" />
 
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/textViewIdDispositivo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ID del Dispositivo"
+        app:layout_constraintTop_toBottomOf="@id/linearLayout"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        tools:layout_editor_absoluteX="151dp"
+        tools:layout_editor_absoluteY="166dp" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

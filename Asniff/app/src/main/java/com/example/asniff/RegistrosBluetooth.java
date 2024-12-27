@@ -1,5 +1,6 @@
 package com.example.asniff;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -51,22 +52,40 @@ public class RegistrosBluetooth extends AppCompatActivity {
             }
         });
 
-        //BorrarBluetooth
-        listaDispositivosBluetooth.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String selectedDevice = listaAdaptadaDispositivosBluetooth.getItem(position);
-                int inicio = selectedDevice.indexOf("ID: ") + "ID: ".length();
-                int fin = selectedDevice.indexOf("\n", inicio);
-                String idDispositivo = selectedDevice.substring(inicio, fin).trim();
+//        //BorrarBluetooth
+//        listaDispositivosBluetooth.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                String selectedDevice = listaAdaptadaDispositivosBluetooth.getItem(position);
+//                int inicio = selectedDevice.indexOf("ID: ") + "ID: ".length();
+//                int fin = selectedDevice.indexOf("\n", inicio);
+//                String idDispositivo = selectedDevice.substring(inicio, fin).trim();
+//
+//                databaseReferenceBluetooth.child(idDispositivo).removeValue()
+//                        .addOnSuccessListener(aVoid -> {
+//                            listaAdaptadaDispositivosBluetooth.remove(selectedDevice);
+//                            Toast.makeText(RegistrosBluetooth.this, "Dispositivo eliminado", Toast.LENGTH_SHORT).show();
+//                        })
+//                        .addOnFailureListener(e -> Toast.makeText(RegistrosBluetooth.this, "Error al eliminar el dispositivo", Toast.LENGTH_SHORT).show());
+//            }
+//        });
 
-                databaseReferenceBluetooth.child(idDispositivo).removeValue()
-                        .addOnSuccessListener(aVoid -> {
-                            listaAdaptadaDispositivosBluetooth.remove(selectedDevice);
-                            Toast.makeText(RegistrosBluetooth.this, "Dispositivo eliminado", Toast.LENGTH_SHORT).show();
-                        })
-                        .addOnFailureListener(e -> Toast.makeText(RegistrosBluetooth.this, "Error al eliminar el dispositivo", Toast.LENGTH_SHORT).show());
-            }
-        });
+            //Goto AnalisisBluetooth
+            listaDispositivosBluetooth.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                @Override
+                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    String selectedDevice = listaAdaptadaDispositivosBluetooth.getItem(position);
+                    int inicio = selectedDevice.indexOf("ID: ") + "ID: ".length();
+                    int fin = selectedDevice.indexOf("\n", inicio);
+                    String idDispositivo = selectedDevice.substring(inicio, fin).trim();
+
+                    Intent intent = new Intent(RegistrosBluetooth.this, AnalisisBluetooth.class);
+                    intent.putExtra("idDispositivo", idDispositivo); // Pasar el ID del dispositivo
+                    startActivity(intent);
+
+                }
+            });
+
+
     }
 }

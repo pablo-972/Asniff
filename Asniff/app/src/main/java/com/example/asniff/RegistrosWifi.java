@@ -1,5 +1,6 @@
 package com.example.asniff;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
@@ -46,6 +47,9 @@ public class RegistrosWifi extends AppCompatActivity {
 
         DatabaseReference databaseReferenceWifi = FirebaseDatabase.getInstance("https://asniff-603d3-default-rtdb.europe-west1.firebasedatabase.app").getReference("wifi");
 
+
+
+
         databaseReferenceWifi.get().addOnCompleteListener(task -> {
             DataSnapshot dataSnapshot = task.getResult();
 
@@ -56,6 +60,23 @@ public class RegistrosWifi extends AppCompatActivity {
         });
 
 
+//        //BorrarWifi
+//        listaDispositivosWifi.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//            @Override
+//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//                String selectedDevice = listaAdaptadaDispositivosWifi.getItem(position);
+//                int inicio = selectedDevice.indexOf("ID: ") + "ID: ".length();
+//                int fin = selectedDevice.indexOf("\n", inicio);
+//                String idDispositivo = selectedDevice.substring(inicio, fin).trim();
+//
+//                databaseReferenceWifi.child(idDispositivo).removeValue()
+//                        .addOnSuccessListener(aVoid -> {
+//                            listaAdaptadaDispositivosWifi.remove(selectedDevice);
+//                            Toast.makeText(RegistrosWifi.this, "Dispositivo eliminado", Toast.LENGTH_SHORT).show();
+//                        })
+//                        .addOnFailureListener(e -> Toast.makeText(RegistrosWifi.this, "Error al eliminar el dispositivo", Toast.LENGTH_SHORT).show());
+//            }
+//        });
         //BorrarWifi
         listaDispositivosWifi.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -65,15 +86,11 @@ public class RegistrosWifi extends AppCompatActivity {
                 int fin = selectedDevice.indexOf("\n", inicio);
                 String idDispositivo = selectedDevice.substring(inicio, fin).trim();
 
-                databaseReferenceWifi.child(idDispositivo).removeValue()
-                        .addOnSuccessListener(aVoid -> {
-                            listaAdaptadaDispositivosWifi.remove(selectedDevice);
-                            Toast.makeText(RegistrosWifi.this, "Dispositivo eliminado", Toast.LENGTH_SHORT).show();
-                        })
-                        .addOnFailureListener(e -> Toast.makeText(RegistrosWifi.this, "Error al eliminar el dispositivo", Toast.LENGTH_SHORT).show());
+                Intent intent = new Intent(RegistrosWifi.this, AnalisisWifi.class);
+                intent.putExtra("idDispositivo", idDispositivo); // Pasar el ID del dispositivo
+                startActivity(intent);
             }
         });
-
 
     }
 }

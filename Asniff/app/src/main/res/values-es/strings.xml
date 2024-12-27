@@ -23,6 +23,7 @@
     <string name="activa_localizacion">ACTIVE LA LOCALIZACIÓN</string>
     <string name="lista_bluetooth_nombre">Nombre: </string>
     <string name="lista_bluetooth_direcion_mac">Dirección MAC: </string>
+    <string name="titulo_analisis">Análisis </string>
 
 
 </resources>
