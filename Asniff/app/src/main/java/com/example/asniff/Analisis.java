@@ -1,6 +1,8 @@
 package com.example.asniff;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -22,30 +24,38 @@ import org.json.JSONObject;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.URI;
 import java.net.URL;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class AnalisisWifi extends AppCompatActivity {
+public class Analisis extends AppCompatActivity {
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_analisis_wifi);
+
+        //Inicializamos
+        setContentView(R.layout.activity_analisis);
+        TextView idRegistro = findViewById(R.id.idRegistro);
+        TextView infoRegistro = findViewById(R.id.infoRegistro);
+        TextView analisisRegistro = findViewById(R.id.analisisRegistro);
 
         String idDispositivo = getIntent().getStringExtra("idDispositivo");
+        String tipoDispositivo = getIntent().getStringExtra("tipoDispositivo");
+        idRegistro.setText("ID del Dispositivo: " + idDispositivo);
 
-        TextView textView = findViewById(R.id.textViewIdDispositivo);
-        textView.setText("ID del Dispositivo: " + idDispositivo);
+        DatabaseReference databaseReference;
+        if(tipoDispositivo.equals("wifi")){
+            databaseReference = FirebaseDatabase.getInstance("https://asniff-603d3-default-rtdb.europe-west1.firebasedatabase.app").getReference("wifi");
+        }else if(tipoDispositivo.equals("bluetooth")){
+            databaseReference = FirebaseDatabase.getInstance("https://asniff-603d3-default-rtdb.europe-west1.firebasedatabase.app").getReference("bluetooth");
+        } else {
+            databaseReference = null;
+        }
 
-        DatabaseReference databaseReferenceWifi = FirebaseDatabase.getInstance(
-                "https://asniff-603d3-default-rtdb.europe-west1.firebasedatabase.app"
-        ).getReference("wifi");
 
-
-        databaseReferenceWifi.child(idDispositivo).addListenerForSingleValueEvent(new ValueEventListener() {
+        databaseReference.child(idDispositivo).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
@@ -57,7 +67,7 @@ public class AnalisisWifi extends AppCompatActivity {
                     String[] parts = cleanedData.split("=");
                     String datosMac = parts[0];
 
-//                    textView.setText("ID: " + idDispositivo + "\nMAC: " + datosMac);
+
 
                     ExecutorService executor = Executors.newSingleThreadExecutor();
                     executor.execute(new Runnable() {
@@ -74,7 +84,7 @@ public class AnalisisWifi extends AppCompatActivity {
                                 @Override
                                 public void run() {
                                     // Actualizar la interfaz de usuario
-                                    textView.setText("ID: " + idDispositivo + "\nMAC: " + datosMac + "\nFabricante: " + macVendorResponse+"\nVulnerabilidades: " + mostrar);
+                                    analisisRegistro.setText("Fabricante: " + macVendorResponse+"\nVulnerabilidades: " + mostrar);
                                 }
                             });
                         }
@@ -264,7 +274,7 @@ public class AnalisisWifi extends AppCompatActivity {
 
 
                 } else {
-                    Toast.makeText(AnalisisWifi.this, "Dispositivo no encontrado", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Analisis.this, "Dispositivo no encontrado", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -272,10 +282,18 @@ public class AnalisisWifi extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-                Toast.makeText(AnalisisWifi.this, "Error al obtener datos", Toast.LENGTH_SHORT).show();
+                Toast.makeText(Analisis.this, "Error al obtener datos", Toast.LENGTH_SHORT).show();
             }
         });
 
+        Button botonEliminar = findViewById(R.id.borrarRegistro);
+        botonEliminar.setOnClickListener(v -> {
+            databaseReference.child(idDispositivo).removeValue().addOnSuccessListener(aVoid -> { setResult(RESULT_OK);
+                Toast.makeText(Analisis.this, "Dispositivo eliminado", Toast.LENGTH_SHORT).show();
+                finish();
+            }).addOnFailureListener(e -> Toast.makeText(Analisis.this, "Error al eliminar el dispositivo", Toast.LENGTH_SHORT).show());
+
+        });
 
 
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {

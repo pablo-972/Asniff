@@ -69,15 +69,16 @@ public class Wifi extends AppCompatActivity {
         String myAddress = Formatter.formatIpAddress(wifiInfo.getIpAddress());
         direccionIP.setText(getString(R.string.conectado_a) + wifiInfo.getSSID() + getString(R.string.direccion_ip) + myAddress);
 
-        //direccionIP.setText("Conectado a: " + wifiInfo.getSSID() + "\nDirección IP: " + myAddress);
 
         wifiManager.startScan();
         List<ScanResult> results = wifiManager.getScanResults();
         for(ScanResult result : results){
-            //listaAdaptadaDispositivos.add(result.toString());
-            String info = "BBSID: " + result.BSSID + "\nSSID: " + result.SSID; //+ "\nEstandar: " + result.getWifiStandard() añadir esto pero hay que cambiar la version de android
+            String info = "BBSID: " + result.BSSID + "\nSSID: " + result.SSID;
             List<String> data = new ArrayList<>();
             data.add(result.SSID);
+            data.add(String.valueOf(result.getWifiStandard()));
+            data.add(result.capabilities);
+
 
 
             if(!dispositivosEncontrados.containsKey(result.BSSID)){

@@ -5,7 +5,18 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".RegistrosWifi">
+    tools:context=".Analisis">
+
+    <Button
+        android:id="@+id/borrarRegistro"
+        android:layout_width="143dp"
+        android:layout_height="69dp"
+        android:layout_marginTop="760dp"
+        android:backgroundTint="#600000"
+        android:text="@string/eliminar_guardados"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
         android:id="@+id/linearLayout"
@@ -24,61 +35,55 @@
             android:layout_height="wrap_content"
             android:fontFamily="sans-serif-medium"
             android:gravity="center"
-            android:text="@string/registros_titulo"
+            android:text="@string/titulo_analisis"
             android:textColor="#FFFFFF"
             android:textSize="30sp"
             android:textStyle="italic" />
 
     </LinearLayout>
 
-
     <TextView
-        android:id="@+id/wifiRegistrados"
+        android:id="@+id/idRegistro"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="108dp"
-        android:text="@string/redes_wifi_guardadas"
-        android:textStyle="bold"
+        android:layout_marginTop="32dp"
+        android:text="ID del Dispositivo"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.09"
+        app:layout_constraintHorizontal_bias="0.085"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <ListView
-        android:id="@+id/guardadosWifi"
-        android:layout_width="303dp"
-        android:layout_height="452dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.364" />
+        app:layout_constraintTop_toBottomOf="@id/linearLayout" />
 
     <View
         android:id="@+id/view"
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="24dp"
         android:layout_marginEnd="24dp"
         android:background="#E0E0E0"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/guardadosWifi" />
+        app:layout_constraintTop_toBottomOf="@+id/infoRegistro" />
 
     <TextView
-        android:id="@+id/eliminarRegistro"
-        android:layout_width="338dp"
-        android:layout_height="46dp"
-        android:layout_marginBottom="152dp"
-        android:gravity="center"
-        android:text="@string/si_desea_analizar_dispositivo"
-        android:textAlignment="center"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.493"
-        app:layout_constraintStart_toStartOf="parent" />
+        android:id="@+id/infoRegistro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="144dp"
+        android:text="Info del dispositivo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
+    <TextView
+        android:id="@+id/analisisRegistro"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="212dp"
+        android:text="Analizando dispositivo..."
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

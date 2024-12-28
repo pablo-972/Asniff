@@ -10,7 +10,8 @@
     <string name="registros_titulo">Logs</string>
     <string name="redes_wifi_guardadas">Saved WiFi networks:</string>
     <string name="dispositivos_bluetooth_guardados">Saved Bluetooth devices:</string>
-    <string name="si_desea_eliminar_dispositivo">If you want to delete a log, tap the desired network/device.</string>
+    <string name="si_desea_analizar_dispositivo">If you want to analise a log, tap the desired network/device.</string>
+    <string name="eliminar_guardados">Remove log</string>
     <string name="cargando_redes_cercanas">Loading nearby WiFi networks...</string>
     <string name="las_redes_disponibles_desapareceran">The networks available in your area will appear in the list. Select one to save it to the database.</string>
     <string name="conectado_a">Connected to: </string>

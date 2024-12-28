@@ -40,7 +40,29 @@ public class RegistrosBluetooth extends AppCompatActivity {
         listaDispositivosBluetooth = findViewById(R.id.guardadosBluetooth);
         listaAdaptadaDispositivosBluetooth = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1);
         listaDispositivosBluetooth.setAdapter(listaAdaptadaDispositivosBluetooth);
+        cargaDispositivosBluetooth();
 
+
+
+        //Goto AnalisisBluetooth
+        listaDispositivosBluetooth.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String selectedDevice = listaAdaptadaDispositivosBluetooth.getItem(position);
+                int inicio = selectedDevice.indexOf("ID: ") + "ID: ".length();
+                int fin = selectedDevice.indexOf("\n", inicio);
+                String idDispositivo = selectedDevice.substring(inicio, fin).trim();
+
+                Intent intent = new Intent(RegistrosBluetooth.this, Analisis.class);
+                intent.putExtra("idDispositivo", idDispositivo);
+                intent.putExtra("tipoDispositivo", "bluetooth");
+                startActivityForResult(intent, 1);
+
+            }
+        });
+    }
+
+    private void cargaDispositivosBluetooth(){
         DatabaseReference databaseReferenceBluetooth = FirebaseDatabase.getInstance("https://asniff-603d3-default-rtdb.europe-west1.firebasedatabase.app").getReference("bluetooth");
 
         databaseReferenceBluetooth.get().addOnCompleteListener(task -> {
@@ -51,41 +73,14 @@ public class RegistrosBluetooth extends AppCompatActivity {
                 listaAdaptadaDispositivosBluetooth.add("ID: " + snapshot.getKey() + "\n INFO: " + dispositivo.toString());
             }
         });
+    }
 
-//        //BorrarBluetooth
-//        listaDispositivosBluetooth.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-//            @Override
-//            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//                String selectedDevice = listaAdaptadaDispositivosBluetooth.getItem(position);
-//                int inicio = selectedDevice.indexOf("ID: ") + "ID: ".length();
-//                int fin = selectedDevice.indexOf("\n", inicio);
-//                String idDispositivo = selectedDevice.substring(inicio, fin).trim();
-//
-//                databaseReferenceBluetooth.child(idDispositivo).removeValue()
-//                        .addOnSuccessListener(aVoid -> {
-//                            listaAdaptadaDispositivosBluetooth.remove(selectedDevice);
-//                            Toast.makeText(RegistrosBluetooth.this, "Dispositivo eliminado", Toast.LENGTH_SHORT).show();
-//                        })
-//                        .addOnFailureListener(e -> Toast.makeText(RegistrosBluetooth.this, "Error al eliminar el dispositivo", Toast.LENGTH_SHORT).show());
-//            }
-//        });
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
-            //Goto AnalisisBluetooth
-            listaDispositivosBluetooth.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-                @Override
-                public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    String selectedDevice = listaAdaptadaDispositivosBluetooth.getItem(position);
-                    int inicio = selectedDevice.indexOf("ID: ") + "ID: ".length();
-                    int fin = selectedDevice.indexOf("\n", inicio);
-                    String idDispositivo = selectedDevice.substring(inicio, fin).trim();
-
-                    Intent intent = new Intent(RegistrosBluetooth.this, AnalisisBluetooth.class);
-                    intent.putExtra("idDispositivo", idDispositivo); // Pasar el ID del dispositivo
-                    startActivity(intent);
-
-                }
-            });
-
-
+        if (requestCode == 1 && resultCode == RESULT_OK) {
+            cargaDispositivosBluetooth();
+        }
     }
 }

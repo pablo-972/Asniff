@@ -74,7 +74,7 @@
         android:layout_height="46dp"
         android:layout_marginBottom="100dp"
         android:gravity="center"
-        android:text="@string/si_desea_eliminar_dispositivo"
+        android:text="@string/si_desea_analizar_dispositivo"
         android:textAlignment="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

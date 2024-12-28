@@ -10,7 +10,8 @@
     <string name="registros_titulo">Registros</string>
     <string name="redes_wifi_guardadas">Redes WiFi guardadas:</string>
     <string name="dispositivos_bluetooth_guardados">Dispositivos Bluetooth guardados:</string>
-    <string name="si_desea_eliminar_dispositivo">Si desea eliminar un registro, pulse en la red/dispositivo deseado.</string>
+    <string name="si_desea_analizar_dispositivo">Si desea analizar un registro, pulse en la red/dispositivo deseado.</string>
+    <string name="eliminar_guardados">Eliminar registro</string>
     <string name="cargando_redes_cercanas">Cargando redes WiFi cercanas...</string>
     <string name="las_redes_disponibles_desapareceran">Las redes disponibles en tu zona aparecerán en la lista. Selecciona una para guardarla en la base de datos.</string>
     <string name="conectado_a">Conectado a: </string>

@@ -1,5 +1,6 @@
 package com.example.asniff;
 
+import android.annotation.SuppressLint;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
@@ -7,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -20,6 +22,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,7 +50,6 @@ public class Bluetooth extends AppCompatActivity {
 
 
         //Comprobamos que el adaptador funciona correctamente y este activado
-
         if (bluetoothAdapter == null) {
             Toast.makeText(getApplicationContext(), getString(R.string.error_adaptador_bluetooth), Toast.LENGTH_LONG).show();
             return;
@@ -92,6 +94,7 @@ public class Bluetooth extends AppCompatActivity {
     }
 
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
+        @SuppressLint("MissingPermission")
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
@@ -99,9 +102,11 @@ public class Bluetooth extends AppCompatActivity {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 String deviceName = device.getName();
                 String macAddress = device.getAddress();
+                //Añadir uuids que son los servicios (es un codigo estandar generalmente) y el tipo (ble, dual, etc) para ello cambiar el map a un List<String> en la info
+                Log.d("uuids", device.getUuids() == null ? "0" : String.valueOf(device.getUuids().length));
+                Log.d("tipo", String.valueOf(device.getType()));
 
                 if (deviceName != null) {
-
                     String info = getString(R.string.lista_bluetooth_nombre) + deviceName + "\n"+ getString(R.string.lista_bluetooth_direcion_mac) + macAddress;
                     if(!dispositivosEncontrados.containsKey(macAddress)){
                         dispositivosEncontrados.put(macAddress, deviceName);
@@ -117,6 +122,7 @@ public class Bluetooth extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        bluetoothAdapter.cancelDiscovery();
         unregisterReceiver(receiver);
     }
 }
