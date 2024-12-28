@@ -22,8 +22,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Bluetooth extends AppCompatActivity {
@@ -33,7 +35,7 @@ public class Bluetooth extends AppCompatActivity {
     private ArrayAdapter<String> listaAdaptadaDispositivos;
     private BluetoothAdapter bluetoothAdapter;
 
-    private Map<String, String> dispositivosEncontrados = new HashMap<>();
+    private Map<String, List<String>> dispositivosEncontrados = new HashMap<>();
 
 
     @Override
@@ -73,12 +75,12 @@ public class Bluetooth extends AppCompatActivity {
                 String dispositivo = listaAdaptadaDispositivos.getItem(position);
                 int indice = dispositivo.indexOf(getString(R.string.lista_bluetooth_direcion_mac)) + getString(R.string.lista_bluetooth_direcion_mac).length();
                 String macDispositivo = dispositivo.substring(indice);
-                String nombreDispositivo = dispositivosEncontrados.get(macDispositivo);
+                List<String> data = dispositivosEncontrados.get(macDispositivo);
 
                 DatabaseReference databaseReference = FirebaseDatabase.getInstance("https://asniff-603d3-default-rtdb.europe-west1.firebasedatabase.app").getReference("bluetooth");
 
-                Map<String, String> deviceData = new HashMap<>();
-                deviceData.put(macDispositivo, nombreDispositivo);
+                Map<String, List<String>> deviceData = new HashMap<>();
+                deviceData.put(macDispositivo, data);
 
                 databaseReference.push().setValue(deviceData)
                         .addOnSuccessListener(aVoid -> Toast.makeText(getApplicationContext(),getString(R.string.dispositivo_enviado_firebase), Toast.LENGTH_SHORT).show())
@@ -100,16 +102,20 @@ public class Bluetooth extends AppCompatActivity {
             String action = intent.getAction();
             if (BluetoothDevice.ACTION_FOUND.equals(action)) {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                String deviceName = device.getName();
                 String macAddress = device.getAddress();
-                //Añadir uuids que son los servicios (es un codigo estandar generalmente) y el tipo (ble, dual, etc) para ello cambiar el map a un List<String> en la info
-                Log.d("uuids", device.getUuids() == null ? "0" : String.valueOf(device.getUuids().length));
-                Log.d("tipo", String.valueOf(device.getType()));
+
+                List<String> data = new ArrayList<>();
+                String deviceName = device.getName();
+                String deviceType = String.valueOf(device.getType());
+                String deviceUUIDS = device.getUuids() == null ? "-" : device.getUuids().toString();
+                data.add(deviceName);
+                data.add(deviceType);
+                data.add(deviceUUIDS);
 
                 if (deviceName != null) {
                     String info = getString(R.string.lista_bluetooth_nombre) + deviceName + "\n"+ getString(R.string.lista_bluetooth_direcion_mac) + macAddress;
                     if(!dispositivosEncontrados.containsKey(macAddress)){
-                        dispositivosEncontrados.put(macAddress, deviceName);
+                        dispositivosEncontrados.put(macAddress, data);
                         listaAdaptadaDispositivos.add(info);
                         listaAdaptadaDispositivos.notifyDataSetChanged();
                     }

@@ -2,6 +2,7 @@ package com.example.asniff;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -25,6 +26,8 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.HashMap;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -67,6 +70,9 @@ public class Analisis extends AppCompatActivity {
                     String[] parts = cleanedData.split("=");
                     String datosMac = parts[0];
 
+                    HashMap<String, List<String>> dispositivo = (HashMap) dispositivoData;
+                    infoRegistro.setText(dispositivo.get(datosMac).toString());
+
 
 
                     ExecutorService executor = Executors.newSingleThreadExecutor();
@@ -75,7 +81,6 @@ public class Analisis extends AppCompatActivity {
                         public void run() {
 
                             String macVendorResponse = getMacVendorInfo(datosMac);
-
                             String nvdResponse = getCVEInfoFromNVD(macVendorResponse);
                             String mostrar = parseVulnerabilityData(nvdResponse);
 
@@ -293,13 +298,6 @@ public class Analisis extends AppCompatActivity {
                 finish();
             }).addOnFailureListener(e -> Toast.makeText(Analisis.this, "Error al eliminar el dispositivo", Toast.LENGTH_SHORT).show());
 
-        });
-
-
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
-            Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
-            return insets;
         });
 
     }
