@@ -66,6 +66,8 @@ public class Analisis extends AppCompatActivity {
                     Object dispositivoData = dataSnapshot.getValue();
                     String datosCrudos = dispositivoData.toString();
                     //Se que es optimizable
+
+
                     String cleanedData = datosCrudos.replace("{", "").replace("}", "");
                     String[] parts = cleanedData.split("=");
                     String datosMac = parts[0];
@@ -79,9 +81,15 @@ public class Analisis extends AppCompatActivity {
                     executor.execute(new Runnable() {
                         @Override
                         public void run() {
-
+                            //Llamada para saber fabricante
                             String macVendorResponse = getMacVendorInfo(datosMac);
-                            String nvdResponse = getCVEInfoFromNVD(macVendorResponse);
+
+                            String primeraPalabra = getFirstWord(macVendorResponse);
+
+                            if(primeraPalabra.equals("Beijing")) primeraPalabra= "Xiaomi";
+
+                            //Llamada a USA
+                            String nvdResponse = getCVEInfoFromNVD(primeraPalabra);
                             String mostrar = parseVulnerabilityData(nvdResponse);
 
 
@@ -92,6 +100,11 @@ public class Analisis extends AppCompatActivity {
                                     analisisRegistro.setText("Fabricante: " + macVendorResponse+"\nVulnerabilidades: " + mostrar);
                                 }
                             });
+                        }
+
+                        public String getFirstWord(String input) {
+                            String[] words = input.split("\\s+"); // Divide el string por espacios
+                            return words[0]; // Devuelve siempre la primera palabra
                         }
 
                         public String parseVulnerabilityData(String nvdResponse) {
@@ -122,75 +135,37 @@ public class Analisis extends AppCompatActivity {
 
                                 JSONObject cve = vulnerability.getJSONObject("cve");
 
+                                // Verificar que existan métricas
+                                if (!cve.has("metrics")) {
+                                    throw new Exception("Campo 'metrics' no encontrado en la vulnerabilidad.");
+                                }
+
+                                JSONObject metrics = cve.getJSONObject("metrics");
+
+                                // Verificar que existan datos CVSS V2
+                                if (!metrics.has("cvssMetricV2")) {
+                                    throw new Exception("Campo 'cvssMetricV2' no encontrado en las métricas.");
+                                }
+
+                                JSONArray cvssMetricV2Array = metrics.getJSONArray("cvssMetricV2");
+                                JSONObject cvssMetricV2 = cvssMetricV2Array.getJSONObject(0);
+
                                 // Obtener los datos relevantes
                                 String lastModified = cve.optString("lastModified", "No disponible");
-                                String baseSeverity = cve.getJSONObject("metrics")
-                                        .getJSONArray("cvssMetricV2")
-                                        .getJSONObject(0)
-                                        .getJSONObject("cvssData")
-                                        .optString("baseSeverity", "No disponible");
+                                String baseSeverity = cvssMetricV2.optString("baseSeverity", "No disponible");
+                                double exploitabilityScore = cvssMetricV2.optDouble("exploitabilityScore", -1);
+                                double impactScore = cvssMetricV2.optDouble("impactScore", -1);
 
-                                int exploitabilityScore = cve.getJSONObject("metrics")
-                                        .getJSONArray("cvssMetricV2")
-                                        .getJSONObject(0)
-                                        .getJSONObject("cvssData")
-                                        .optInt("exploitabilityScore", -1);
-
-                                int impactScore = cve.getJSONObject("metrics")
-                                        .getJSONArray("cvssMetricV2")
-                                        .getJSONObject(0)
-                                        .getJSONObject("cvssData")
-                                        .optInt("impactScore", -1);
-
+                                JSONObject cvssData = cvssMetricV2.getJSONObject("cvssData");
                                 String version = responseJson.optString("version", "No disponible");
-
-                                String vectorString = cve.getJSONObject("metrics")
-                                        .getJSONArray("cvssMetricV2")
-                                        .getJSONObject(0)
-                                        .getJSONObject("cvssData")
-                                        .optString("vectorString", "No disponible");
-
-                                int baseScore = cve.getJSONObject("metrics")
-                                        .getJSONArray("cvssMetricV2")
-                                        .getJSONObject(0)
-                                        .getJSONObject("cvssData")
-                                        .optInt("baseScore", -1);
-
-                                String accessVector = cve.getJSONObject("metrics")
-                                        .getJSONArray("cvssMetricV2")
-                                        .getJSONObject(0)
-                                        .getJSONObject("cvssData")
-                                        .optString("accessVector", "No disponible");
-
-                                String accessComplexity = cve.getJSONObject("metrics")
-                                        .getJSONArray("cvssMetricV2")
-                                        .getJSONObject(0)
-                                        .getJSONObject("cvssData")
-                                        .optString("accessComplexity", "No disponible");
-
-                                String authentication = cve.getJSONObject("metrics")
-                                        .getJSONArray("cvssMetricV2")
-                                        .getJSONObject(0)
-                                        .getJSONObject("cvssData")
-                                        .optString("authentication", "No disponible");
-
-                                String confidentialityImpact = cve.getJSONObject("metrics")
-                                        .getJSONArray("cvssMetricV2")
-                                        .getJSONObject(0)
-                                        .getJSONObject("cvssData")
-                                        .optString("confidentialityImpact", "No disponible");
-
-                                String integrityImpact = cve.getJSONObject("metrics")
-                                        .getJSONArray("cvssMetricV2")
-                                        .getJSONObject(0)
-                                        .getJSONObject("cvssData")
-                                        .optString("integrityImpact", "No disponible");
-
-                                String availabilityImpact = cve.getJSONObject("metrics")
-                                        .getJSONArray("cvssMetricV2")
-                                        .getJSONObject(0)
-                                        .getJSONObject("cvssData")
-                                        .optString("availabilityImpact", "No disponible");
+                                String vectorString = cvssData.optString("vectorString", "No disponible");
+                                double baseScore = cvssData.optDouble("baseScore", -1);
+                                String accessVector = cvssData.optString("accessVector", "No disponible");
+                                String accessComplexity = cvssData.optString("accessComplexity", "No disponible");
+                                String authentication = cvssData.optString("authentication", "No disponible");
+                                String confidentialityImpact = cvssData.optString("confidentialityImpact", "No disponible");
+                                String integrityImpact = cvssData.optString("integrityImpact", "No disponible");
+                                String availabilityImpact = cvssData.optString("availabilityImpact", "No disponible");
 
                                 // Crear un nuevo String con la información extraída
                                 StringBuilder updatedResponse = new StringBuilder();
@@ -214,10 +189,10 @@ public class Analisis extends AppCompatActivity {
                             } catch (Exception e) {
                                 // Mostrar el error con más detalle
                                 e.printStackTrace();
-//                                return "Error parsing the response: " + e.getMessage();
                                 return e.getMessage();
                             }
                         }
+
 
                         private String getMacVendorInfo(String macAddress) {
                             String response = "";
