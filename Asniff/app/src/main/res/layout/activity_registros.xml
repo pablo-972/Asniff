@@ -46,8 +46,8 @@
 
     <ListView
         android:id="@+id/guardadosWifi"
-        android:layout_width="280dp"
-        android:layout_height="438dp"
+        android:layout_width="311dp"
+        android:layout_height="448dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.495"

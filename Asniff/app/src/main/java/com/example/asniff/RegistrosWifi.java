@@ -17,6 +17,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.List;
 import java.util.Map;
 
 public class RegistrosWifi extends AppCompatActivity {
@@ -72,8 +73,9 @@ public class RegistrosWifi extends AppCompatActivity {
             DataSnapshot dataSnapshot = task.getResult();
 
             for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                Map<String, String> dispositivoWifi = (Map<String, String>) snapshot.getValue();
-                listaAdaptadaDispositivosWifi.add("ID: " + snapshot.getKey() + "\n INFO: " + dispositivoWifi.toString());
+                Map<String, List<String>> dispositivoWifi = (Map<String, List<String>>) snapshot.getValue();
+                String macAddress = dispositivoWifi.toString().split("[{,=\\[\\]]")[1];
+                listaAdaptadaDispositivosWifi.add("ID: " + snapshot.getKey() + "\nINFO: " + macAddress + "=" + dispositivoWifi.get(macAddress).get(0));
             }
         });
     }

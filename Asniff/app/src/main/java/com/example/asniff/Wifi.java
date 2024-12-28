@@ -72,14 +72,13 @@ public class Wifi extends AppCompatActivity {
 
         wifiManager.startScan();
         List<ScanResult> results = wifiManager.getScanResults();
+
         for(ScanResult result : results){
             String info = "BBSID: " + result.BSSID + "\nSSID: " + result.SSID;
             List<String> data = new ArrayList<>();
             data.add(result.SSID);
             data.add(String.valueOf(result.getWifiStandard()));
             data.add(result.capabilities);
-
-
 
             if(!dispositivosEncontrados.containsKey(result.BSSID)){
                 dispositivosEncontrados.put(result.BSSID, data);

@@ -2,6 +2,7 @@ package com.example.asniff;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -18,6 +19,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.List;
 import java.util.Map;
 
 public class RegistrosBluetooth extends AppCompatActivity {
@@ -69,8 +71,9 @@ public class RegistrosBluetooth extends AppCompatActivity {
             DataSnapshot dataSnapshot = task.getResult();
 
             for(DataSnapshot snapshot : dataSnapshot.getChildren()){
-                Map<String, String> dispositivo = (Map<String, String>) snapshot.getValue();
-                listaAdaptadaDispositivosBluetooth.add("ID: " + snapshot.getKey() + "\n INFO: " + dispositivo.toString());
+                Map<String, List<String>> dispositivo = (Map<String, List<String>>) snapshot.getValue();
+                String macAddress = dispositivo.toString().split("[{,=\\[\\]]")[1];
+                listaAdaptadaDispositivosBluetooth.add("ID: " + snapshot.getKey() + "\nINFO: " + macAddress + "=" + dispositivo.get(macAddress).get(0));
             }
         });
     }

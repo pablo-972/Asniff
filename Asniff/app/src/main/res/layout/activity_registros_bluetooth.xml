@@ -47,8 +47,8 @@
 
     <ListView
         android:id="@+id/guardadosBluetooth"
-        android:layout_width="309dp"
-        android:layout_height="482dp"
+        android:layout_width="369dp"
+        android:layout_height="457dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

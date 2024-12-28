@@ -1,5 +1,16 @@
 package com.example.asniff;
 
+import static android.bluetooth.BluetoothDevice.DEVICE_TYPE_CLASSIC;
+import static android.bluetooth.BluetoothDevice.DEVICE_TYPE_DUAL;
+import static android.bluetooth.BluetoothDevice.DEVICE_TYPE_LE;
+import static android.net.wifi.ScanResult.WIFI_STANDARD_11AC;
+import static android.net.wifi.ScanResult.WIFI_STANDARD_11AD;
+import static android.net.wifi.ScanResult.WIFI_STANDARD_11AX;
+import static android.net.wifi.ScanResult.WIFI_STANDARD_11BE;
+import static android.net.wifi.ScanResult.WIFI_STANDARD_11N;
+import static android.net.wifi.ScanResult.WIFI_STANDARD_LEGACY;
+import static android.net.wifi.ScanResult.WIFI_STANDARD_UNKNOWN;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -65,7 +76,6 @@ public class Analisis extends AppCompatActivity {
                 if (dataSnapshot.exists()) {
                     Object dispositivoData = dataSnapshot.getValue();
                     String datosCrudos = dispositivoData.toString();
-                    //Se que es optimizable
 
 
                     String cleanedData = datosCrudos.replace("{", "").replace("}", "");
@@ -73,7 +83,59 @@ public class Analisis extends AppCompatActivity {
                     String datosMac = parts[0];
 
                     HashMap<String, List<String>> dispositivo = (HashMap) dispositivoData;
-                    infoRegistro.setText(dispositivo.get(datosMac).toString());
+
+                    if (tipoDispositivo.equals("wifi")) {
+
+                        String ssid = dispositivo.get(datosMac).get(0);
+                        int estandarWifi = Integer.parseInt(dispositivo.get(datosMac).get(1));
+                        String estandarWifiDescripcion = "Desconocido";
+                        switch(estandarWifi) {
+                            case WIFI_STANDARD_LEGACY:
+                                estandarWifiDescripcion = "legacy";
+                            case WIFI_STANDARD_11N:
+                                estandarWifiDescripcion = "11n";
+                            case WIFI_STANDARD_11AC:
+                                estandarWifiDescripcion = "11ac";
+                            case WIFI_STANDARD_11AX:
+                                estandarWifiDescripcion = "11ax";
+                            case WIFI_STANDARD_11AD:
+                                estandarWifiDescripcion = "11ad";
+                            case WIFI_STANDARD_11BE:
+                                estandarWifiDescripcion = "11be";
+                        }
+
+                        String capabilities = dispositivo.get(datosMac).get(2);
+
+                        StringBuilder wifiInfo = new StringBuilder();
+                        wifiInfo.append("SSID: ").append(ssid).append("\n");
+                        wifiInfo.append("Estandar WiFi: ").append(estandarWifiDescripcion).append("\n");
+                        wifiInfo.append("Capacidades: ").append(capabilities).append("\n");
+
+                        infoRegistro.setText(wifiInfo.toString());
+
+                    } else if (tipoDispositivo.equals("bluetooth")) {
+
+                        String nombreBluetooth = dispositivo.get(datosMac).get(0);
+                        int tipoBluetooth = Integer.parseInt(dispositivo.get(datosMac).get(1));
+                        String tipoBluetoothDescripcion = "Desconocido";
+                        if (tipoBluetooth == DEVICE_TYPE_LE) {
+                            tipoBluetoothDescripcion = "Bluetooth Low Energy (BLE)";
+                        } else if (tipoBluetooth == DEVICE_TYPE_CLASSIC) {
+                            tipoBluetoothDescripcion = "Bluetooth Clásico";
+                        } else if (tipoBluetooth == DEVICE_TYPE_DUAL) {
+                            tipoBluetoothDescripcion = "Bluetooth Dual Mode (Clásico + BLE)";
+                        }
+                        String uuids = dispositivo.get(datosMac).get(2);
+
+                        StringBuilder bluetoothInfo = new StringBuilder();
+                        bluetoothInfo.append("Nombre: ").append(nombreBluetooth).append("\n");
+                        bluetoothInfo.append("Tipo Bluetooth: ").append(tipoBluetoothDescripcion).append("\n");
+                        bluetoothInfo.append("UUIDs: ").append(uuids != null && !uuids.isEmpty() ? uuids : "-").append("\n");
+
+                        infoRegistro.setText(bluetoothInfo.toString());
+
+                    }
+
 
 
 
