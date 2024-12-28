@@ -44,7 +44,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.535" />
+        app:layout_constraintVertical_bias="0.633" />
 
     <TextView
         android:id="@+id/direccionIP"
@@ -87,7 +87,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:layout_marginTop="156dp"
+        android:layout_marginTop="144dp"
         android:text="@string/cargando_redes_cercanas"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
@@ -97,10 +97,10 @@
         android:id="@+id/descripcionWifi"
         android:layout_width="355dp"
         android:layout_height="34dp"
-        android:layout_marginTop="196dp"
+        android:layout_marginTop="184dp"
         android:text="@string/las_redes_disponibles_desapareceran"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.428"
+        app:layout_constraintHorizontal_bias="0.368"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

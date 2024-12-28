@@ -11,9 +11,10 @@
         android:id="@+id/guardadosBluetooth"
         android:layout_width="141dp"
         android:layout_height="78dp"
-        android:layout_marginTop="752dp"
+        android:layout_marginTop="722dp"
         android:backgroundTint="#600000"
         android:text="@string/ver_registros_bluetooth"
+        android:layout_marginBottom="16dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
