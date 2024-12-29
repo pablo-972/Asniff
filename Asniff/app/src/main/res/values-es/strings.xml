@@ -22,9 +22,17 @@
     <string name="error_envio_firebase">Error al enviar a Firebase</string>
     <string name="activa_servicio_wifi">ACTIVE EL SERVICIO WIFI</string>
     <string name="activa_localizacion">ACTIVE LA LOCALIZACIÓN</string>
-    <string name="lista_bluetooth_nombre">Nombre: </string>
+    <string name="nombre">Nombre: </string>
     <string name="lista_bluetooth_direcion_mac">Dirección MAC: </string>
     <string name="titulo_analisis">Análisis </string>
+    <string name="estandar_wifi">Estándar WiFi: </string>
+    <string name="capacidades_wifi">Capacidades: </string>
+    <string name="tipo_bluetooth">Tipo Bluetooth: </string>
+    <string name="b_clasico">Bluetooth Clásico</string>
+    <string name="b_dual">Bluetooth Dual Mode (Clásico + BLE)</string>
+    <string name="desconocido">Desconocido</string>
+    <string name="fabricante">Fabricante: </string>
+    <string name="vulnerabilidades">Vulnerabilidades: </string>
 
 
 </resources>

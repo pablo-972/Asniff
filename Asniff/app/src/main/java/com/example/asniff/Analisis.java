@@ -57,7 +57,7 @@ public class Analisis extends AppCompatActivity {
 
         String idDispositivo = getIntent().getStringExtra("idDispositivo");
         String tipoDispositivo = getIntent().getStringExtra("tipoDispositivo");
-        idRegistro.setText("ID del Dispositivo: " + idDispositivo);
+        idRegistro.setText("ID: " + idDispositivo);
 
         DatabaseReference databaseReference;
         if(tipoDispositivo.equals("wifi")){
@@ -88,7 +88,7 @@ public class Analisis extends AppCompatActivity {
 
                         String ssid = dispositivo.get(datosMac).get(0);
                         int estandarWifi = Integer.parseInt(dispositivo.get(datosMac).get(1));
-                        String estandarWifiDescripcion = "Desconocido";
+                        String estandarWifiDescripcion = getString(R.string.desconocido);
                         switch(estandarWifi) {
                             case WIFI_STANDARD_LEGACY:
                                 estandarWifiDescripcion = "legacy";
@@ -108,8 +108,8 @@ public class Analisis extends AppCompatActivity {
 
                         StringBuilder wifiInfo = new StringBuilder();
                         wifiInfo.append("SSID: ").append(ssid).append("\n");
-                        wifiInfo.append("Estandar WiFi: ").append(estandarWifiDescripcion).append("\n");
-                        wifiInfo.append("Capacidades: ").append(capabilities).append("\n");
+                        wifiInfo.append(getString(R.string.estandar_wifi)).append(" " + estandarWifiDescripcion).append("\n");
+                        wifiInfo.append(getString(R.string.capacidades_wifi)).append(" " + capabilities).append("\n");
 
                         infoRegistro.setText(wifiInfo.toString());
 
@@ -117,19 +117,19 @@ public class Analisis extends AppCompatActivity {
 
                         String nombreBluetooth = dispositivo.get(datosMac).get(0);
                         int tipoBluetooth = Integer.parseInt(dispositivo.get(datosMac).get(1));
-                        String tipoBluetoothDescripcion = "Desconocido";
+                        String tipoBluetoothDescripcion = getString(R.string.desconocido);
                         if (tipoBluetooth == DEVICE_TYPE_LE) {
                             tipoBluetoothDescripcion = "Bluetooth Low Energy (BLE)";
                         } else if (tipoBluetooth == DEVICE_TYPE_CLASSIC) {
-                            tipoBluetoothDescripcion = "Bluetooth Clásico";
+                            tipoBluetoothDescripcion = getString(R.string.b_clasico);
                         } else if (tipoBluetooth == DEVICE_TYPE_DUAL) {
-                            tipoBluetoothDescripcion = "Bluetooth Dual Mode (Clásico + BLE)";
+                            tipoBluetoothDescripcion = getString(R.string.b_dual);
                         }
                         String uuids = dispositivo.get(datosMac).get(2);
 
                         StringBuilder bluetoothInfo = new StringBuilder();
-                        bluetoothInfo.append("Nombre: ").append(nombreBluetooth).append("\n");
-                        bluetoothInfo.append("Tipo Bluetooth: ").append(tipoBluetoothDescripcion).append("\n");
+                        bluetoothInfo.append(getString(R.string.nombre)).append(" " + nombreBluetooth).append("\n");
+                        bluetoothInfo.append(getString(R.string.tipo_bluetooth)).append(" " + tipoBluetoothDescripcion).append("\n");
                         bluetoothInfo.append("UUIDs: ").append(uuids != null && !uuids.isEmpty() ? uuids : "-").append("\n");
 
                         infoRegistro.setText(bluetoothInfo.toString());
@@ -158,8 +158,7 @@ public class Analisis extends AppCompatActivity {
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    // Actualizar la interfaz de usuario
-                                    analisisRegistro.setText("Fabricante: " + macVendorResponse+"\nVulnerabilidades: " + mostrar);
+                                    analisisRegistro.setText(getString(R.string.fabricante) + macVendorResponse+"\n"+ getString(R.string.vulnerabilidades) + mostrar);
                                 }
                             });
                         }

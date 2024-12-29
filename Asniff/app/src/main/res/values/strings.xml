@@ -22,9 +22,17 @@
     <string name="error_envio_firebase">Couldnt send to Firebase</string>
     <string name="activa_servicio_wifi">ACTIVATE WIFI</string>
     <string name="activa_localizacion">ACTIVATE LOCATION</string>
-    <string name="lista_bluetooth_nombre">Name: </string>
+    <string name="nombre">Name: </string>
     <string name="lista_bluetooth_direcion_mac">MAC Address: </string>
     <string name="titulo_analisis">Analysis </string>
+    <string name="estandar_wifi">WiFi Standard: </string>
+    <string name="capacidades_wifi">Capabilities: </string>
+    <string name="tipo_bluetooth">Bluetooth Type: </string>
+    <string name="b_clasico">Classic Bluetooth</string>
+    <string name="b_dual">Bluetooth Dual Mode (Classic + BLE)</string>
+    <string name="desconocido">Unknown</string>
+    <string name="fabricante">Manufacturer: </string>
+    <string name="vulnerabilidades">Vulnerabilities: </string>
 
 
 </resources>
