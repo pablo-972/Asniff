@@ -33,6 +33,18 @@
     <string name="desconocido">Desconocido</string>
     <string name="fabricante">Fabricante: </string>
     <string name="vulnerabilidades">Vulnerabilidades: </string>
-
+    <string name="severidad">Severidad: </string>
+    <string name="explotable">Grado de explotacion:  </string>
+    <string name="impacto">Grado de Impacto:   </string>
+    <string name="version">Versión:  </string>
+    <string name="cadena_vectores">Puntuación de Explotabilidad: </string>
+    <string name="puntuacion_base">Puntuación base: </string>
+    <string name="vector_acceso">Vector de acceso: </string>
+    <string name="complejidad_acceso">Complejidad de Acceso: </string>
+    <string name="autenticacion">Autenticación: </string>
+    <string name="impacto_confidencialidad">Impacto en la Confidencialidad:</string>
+    <string name="impacto_integridad">Impacto en la Integridad:</string>
+    <string name="impacto_disponibilidad">Impacto en la Disponibilidad:  </string>
+    <string name="ultima_modificacion">Última modificación: </string>
 
 </resources>

@@ -11,6 +11,7 @@ import static android.net.wifi.ScanResult.WIFI_STANDARD_11N;
 import static android.net.wifi.ScanResult.WIFI_STANDARD_LEGACY;
 import static android.net.wifi.ScanResult.WIFI_STANDARD_UNKNOWN;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -152,13 +153,13 @@ public class Analisis extends AppCompatActivity {
 
                             //Llamada a USA
                             String nvdResponse = getCVEInfoFromNVD(primeraPalabra);
-                            String mostrar = parseVulnerabilityData(nvdResponse);
+                            String mostrar = parseVulnerabilityData(Analisis.this,nvdResponse);
 
 
                             runOnUiThread(new Runnable() {
                                 @Override
                                 public void run() {
-                                    analisisRegistro.setText(getString(R.string.fabricante) + macVendorResponse+"\n"+ getString(R.string.vulnerabilidades) + mostrar);
+                                    analisisRegistro.setText(getString(R.string.fabricante) + macVendorResponse+"\n"+ getString(R.string.vulnerabilidades) + "\n" + mostrar);
                                 }
                             });
                         }
@@ -168,7 +169,7 @@ public class Analisis extends AppCompatActivity {
                             return words[0]; // Devuelve siempre la primera palabra
                         }
 
-                        public String parseVulnerabilityData(String nvdResponse) {
+                        public String parseVulnerabilityData(Context context, String nvdResponse) {
                             try {
                                 // Convertir la respuesta JSON en un objeto JSONObject
                                 JSONObject responseJson = new JSONObject(nvdResponse);
@@ -227,22 +228,22 @@ public class Analisis extends AppCompatActivity {
                                 String confidentialityImpact = cvssData.optString("confidentialityImpact", "No disponible");
                                 String integrityImpact = cvssData.optString("integrityImpact", "No disponible");
                                 String availabilityImpact = cvssData.optString("availabilityImpact", "No disponible");
-
+                                //R.string.fabricante
                                 // Crear un nuevo String con la información extraída
                                 StringBuilder updatedResponse = new StringBuilder();
-                                updatedResponse.append("Last Modified: ").append(lastModified).append("\n")
-                                        .append("Base Severity: ").append(baseSeverity).append("\n")
-                                        .append("Exploitability Score: ").append(exploitabilityScore).append("\n")
-                                        .append("Impact Score: ").append(impactScore).append("\n")
-                                        .append("Version: ").append(version).append("\n")
-                                        .append("Vector String: ").append(vectorString).append("\n")
-                                        .append("Base Score: ").append(baseScore).append("\n")
-                                        .append("Access Vector: ").append(accessVector).append("\n")
-                                        .append("Access Complexity: ").append(accessComplexity).append("\n")
-                                        .append("Authentication: ").append(authentication).append("\n")
-                                        .append("Confidentiality Impact: ").append(confidentialityImpact).append("\n")
-                                        .append("Integrity Impact: ").append(integrityImpact).append("\n")
-                                        .append("Availability Impact: ").append(availabilityImpact);
+                                updatedResponse.append(context.getString(R.string.ultima_modificacion)).append(lastModified).append("\n")
+                                        .append(context.getString(R.string.severidad)).append(baseSeverity).append("\n")
+                                        .append(context.getString(R.string.explotable)).append(exploitabilityScore).append("\n")
+                                        .append(context.getString(R.string.impacto)).append(impactScore).append("\n")
+                                        .append(context.getString(R.string.version)).append(version).append("\n")
+                                        .append(context.getString(R.string.cadena_vectores)).append(vectorString).append("\n")
+                                        .append(context.getString(R.string.puntuacion_base)).append(baseScore).append("\n")
+                                        .append(context.getString(R.string.vector_acceso)).append(accessVector).append("\n")
+                                        .append(context.getString(R.string.complejidad_acceso)).append(accessComplexity).append("\n")
+                                        .append(context.getString(R.string.autenticacion)).append(authentication).append("\n")
+                                        .append(context.getString(R.string.impacto_confidencialidad)).append(confidentialityImpact).append("\n")
+                                        .append(context.getString(R.string.impacto_integridad)).append(integrityImpact).append("\n")
+                                        .append(context.getString(R.string.impacto_disponibilidad)).append(availabilityImpact);
 
                                 // Devolver el nuevo String con la información procesada
                                 return updatedResponse.toString();

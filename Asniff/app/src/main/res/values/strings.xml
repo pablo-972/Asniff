@@ -33,6 +33,18 @@
     <string name="desconocido">Unknown</string>
     <string name="fabricante">Manufacturer: </string>
     <string name="vulnerabilidades">Vulnerabilities: </string>
-
+    <string name="severidad">Base Severity: </string>
+    <string name="explotable">Exploitability Score:  </string>
+    <string name="impacto">Impact Score:   </string>
+    <string name="version">Version:  </string>
+    <string name="cadena_vectores">Vector String: </string>
+    <string name="puntuacion_base">Base Score: </string>
+    <string name="vector_acceso">Access Vector: </string>
+    <string name="complejidad_acceso">Access Complexity: </string>
+    <string name="autenticacion">Authentication: </string>
+    <string name="impacto_confidencialidad">Confidentiality Impact: </string>
+    <string name="impacto_integridad">Integrity Impact: </string>
+    <string name="impacto_disponibilidad">Availability Impact: </string>
+    <string name="ultima_modificacion">Last Modified: </string>
 
 </resources>
