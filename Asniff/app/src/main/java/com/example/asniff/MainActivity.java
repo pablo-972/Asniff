@@ -1,3 +1,7 @@
+//Práctica realizada por:
+// Pablo Miguel Aguilar Blanco
+// Antonio Salvador Gámez Zafra
+
 package com.example.asniff;
 
 import android.content.Context;
