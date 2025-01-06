@@ -26,7 +26,7 @@
 1. Clona el repositorio:
 
    ```bash
-   git clone https://github.com/tuusuario/asniff.git
+   git clone https://github.com/pablo-972/Asniff
    ```
 
 2. Abre el proyecto en Android Studio.
